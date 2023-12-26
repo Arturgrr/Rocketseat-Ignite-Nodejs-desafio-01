@@ -19,7 +19,7 @@ const server = http.createServer(async (req, res) => {
 
         return route.handler(req, res);
     } else {
-        res.writeHead(404, { 'Content-Type': 'application/json' }).end(JSON.stringify({ message: 'Route not found' }));
+        res.writeHead(404).end(JSON.stringify({ message: 'Route not found' }));
     }
 });
 
