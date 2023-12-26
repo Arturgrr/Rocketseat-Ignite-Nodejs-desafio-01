@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import parse from 'csv-parse';
+import {parse} from 'csv-parse';
 
 const dbPath = new URL('../db.csv', import.meta.url);
 
@@ -22,6 +22,8 @@ export class Database {
       });
     } catch (err) {
       fs.writeFileSync(this.filePath, this.header.join(',') + '\n', { flag: 'w' });
+
+      this.data = [this.header.reduce((obj, key) => ({ ...obj, [key]: undefined }), {})];
     }
   }
 }
