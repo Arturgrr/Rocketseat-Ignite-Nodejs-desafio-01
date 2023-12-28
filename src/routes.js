@@ -24,4 +24,15 @@ export const routes = [
 			return res.end();
 		},
 	},
+	{
+		method: "GET",
+		path: buildRoutePath("/tasks"),
+		handler: (req, res) => {
+			const taksList = db.getALLtasks();
+
+			res.writeHead(200);
+			res.write(taksList);
+			return res.end();
+		},
+	},
 ];

@@ -56,4 +56,8 @@ export class Database {
 
 		fs.writeFileSync(this.filePath, this.header.join(",") + "\n" + fileData);
 	}
+
+	getALLtasks() {
+		return JSON.stringify(this.data, null, 2);
+	}
 }
