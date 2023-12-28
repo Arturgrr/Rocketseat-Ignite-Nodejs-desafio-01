@@ -49,15 +49,51 @@ export class Database {
 		});
 
 		this.updateFile();
+
+		return true;
 	}
 
 	updateFile() {
 		const fileData = this.data.map((task) => Object.values(task).join(",")).join("\n");
 
 		fs.writeFileSync(this.filePath, this.header.join(",") + "\n" + fileData);
+
+		return true;
 	}
 
 	getALLtasks() {
 		return JSON.stringify(this.data, null, 2);
+	}
+
+	findTaskById(id) {
+		const task = this.data.find((t) => t.id === id);
+		return task || null;
+	}
+
+	updateTask(id, newTask) {
+		const task = this.findTaskById(id);
+		if (!task) {
+			return false;
+		}
+
+		const timestamp = new Date().toISOString();
+
+		const updatedTask = {
+			...task,
+			...newTask,
+			updated_at: timestamp,
+		};
+
+		this.data = this.data.map((t) => {
+			if (t.id === id) {
+				return updatedTask;
+			}
+
+			return t;
+		});
+
+		this.updateFile();
+
+		return true;
 	}
 }

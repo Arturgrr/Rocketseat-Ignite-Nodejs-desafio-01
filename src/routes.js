@@ -35,4 +35,34 @@ export const routes = [
 			return res.end();
 		},
 	},
+	{
+		method: "PUT",
+		path: buildRoutePath("/tasks/:id"),
+		handler: (req, res) => {
+			const task = db.findTaskById(req.params.id);
+			if (!task) {
+				res.writeHead(400);
+				res.write("Task not found");
+				return res.end();
+			}
+
+			if (req.body == null || (!req.body.title && !req.body.description)) {
+				res.writeHead(400);
+				return res.end();
+			}
+
+			if (req.body.title) {
+				task.title = req.body.title;
+			}
+
+			if (req.body.description) {
+				task.description = req.body.description;
+			}
+
+			db.updateTask(req.params.id, task);
+
+			res.writeHead(200);
+			return res.end();
+		},
+	},
 ];
