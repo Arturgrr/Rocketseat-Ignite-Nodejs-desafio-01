@@ -17,7 +17,7 @@ export class Database {
 		try {
 			const fileData = fs.readFileSync(this.filePath, "utf8");
 
-			parse(fileData, { columns: true }, (err, records) => {
+			parse(fileData, { columns: true, cast: true }, (err, records) => {
 				if (err) {
 					console.error("Erro ao fazer o parse do arquivo CSV:", err);
 					return;
@@ -40,7 +40,7 @@ export class Database {
 		const timestamp = new Date().toISOString();
 
 		this.data.push({
-			id: this.data.length + 1,
+			id: JSON.stringify(this.data.length + 1),
 			title: newTask.title,
 			description: newTask.description,
 			completed_at: null,
@@ -91,6 +91,19 @@ export class Database {
 
 			return t;
 		});
+
+		this.updateFile();
+
+		return true;
+	}
+
+	deleteTask(id) {
+		const task = this.findTaskById(id);
+		if (!task) {
+			return false;
+		}
+
+		this.data = this.data.filter((t) => t.id !== id);
 
 		this.updateFile();
 

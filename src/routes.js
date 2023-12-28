@@ -65,4 +65,21 @@ export const routes = [
 			return res.end();
 		},
 	},
+	{
+		method: "DELETE",
+		path: buildRoutePath("/tasks/:id"),
+		handler: (req, res) => {
+			const task = db.findTaskById(req.params.id);
+			if (!task) {
+				res.writeHead(400);
+				res.write("Task not found");
+				return res.end();
+			}
+
+			db.deleteTask(req.params.id);
+
+			res.writeHead(200);
+			return res.end();
+		},
+	},
 ];
