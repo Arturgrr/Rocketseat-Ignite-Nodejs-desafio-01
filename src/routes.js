@@ -39,7 +39,7 @@ export const routes = [
 		method: "PUT",
 		path: buildRoutePath("/tasks/:id"),
 		handler: (req, res) => {
-			const task = db.findTaskById(req.params.id);
+			const task = db.findTaskById(Number(req.params.id));
 			if (!task) {
 				res.writeHead(400);
 				res.write("Task not found");
@@ -59,7 +59,7 @@ export const routes = [
 				task.description = req.body.description;
 			}
 
-			db.updateTask(req.params.id, task);
+			db.updateTask(Number(req.params.id), task);
 
 			res.writeHead(200);
 			return res.end();
@@ -69,14 +69,37 @@ export const routes = [
 		method: "DELETE",
 		path: buildRoutePath("/tasks/:id"),
 		handler: (req, res) => {
-			const task = db.findTaskById(req.params.id);
+			const task = db.findTaskById(Number(req.params.id));
 			if (!task) {
 				res.writeHead(400);
 				res.write("Task not found");
 				return res.end();
 			}
 
-			db.deleteTask(req.params.id);
+			db.deleteTask(Number(req.params.id));
+
+			res.writeHead(200);
+			return res.end();
+		},
+	},
+	{
+		method: "PATCH",
+		path: buildRoutePath("/tasks/:id/complete"),
+		handler: (req, res) => {
+			const task = db.findTaskById(Number(req.params.id));
+			if (!task) {
+				res.writeHead(400);
+				res.write("Task not found");
+				return res.end();
+			}
+
+			if (task.completed_at) {
+				res.writeHead(400);
+				res.write("Task already completed");
+				return res.end();
+			}
+
+			db.completed_at(Number(req.params.id));
 
 			res.writeHead(200);
 			return res.end();

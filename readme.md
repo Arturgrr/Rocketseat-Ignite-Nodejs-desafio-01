@@ -8,7 +8,7 @@ A API deve conter as seguintes funcionalidades:
 - [X] Listagem de todas as tasks
 - [X] Atualização de uma task pelo `id`
 - [X] Remover uma task pelo `id`
-- [ ] Marcar pelo `id` uma task como completa
+- [X] Marcar pelo `id` uma task como completa
 - [X] E o verdadeiro desafio: Importação de tasks em massa por um arquivo CSV
 
 
@@ -60,7 +60,7 @@ Rotas:
 Algumas sugestões do que pode ser implementado:
 
 - [X] Validar se as propriedades `title` e `description` das rotas `POST` e `PUT` estão presentes no `body` da requisição.
-- [ ] Nas rotas que recebem o `/:id`, além de validar se o `id` existe no banco de dados, retornar a requisição com uma mensagem informando que o registro não existe.
+- [X] Nas rotas que recebem o `/:id`, além de validar se o `id` existe no banco de dados, retornar a requisição com uma mensagem informando que o registro não existe.
 
 
 <img alt="Rocketseat Education" src="https://avatars.githubusercontent.com/u/69590972?s=200&v=4" width="100px" />

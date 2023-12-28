@@ -40,7 +40,7 @@ export class Database {
 		const timestamp = new Date().toISOString();
 
 		this.data.push({
-			id: JSON.stringify(this.data.length + 1),
+			id: Number(this.data.length + 1),
 			title: newTask.title,
 			description: newTask.description,
 			completed_at: null,
@@ -104,6 +104,32 @@ export class Database {
 		}
 
 		this.data = this.data.filter((t) => t.id !== id);
+
+		this.updateFile();
+
+		return true;
+	}
+
+	completed_at(id) {
+		const task = this.findTaskById(id);
+		if (!task) {
+			return false;
+		}
+
+		const timestamp = new Date().toISOString();
+
+		const updatedTask = {
+			...task,
+			completed_at: timestamp,
+		};
+
+		this.data = this.data.map((t) => {
+			if (t.id === id) {
+				return updatedTask;
+			}
+
+			return t;
+		});
 
 		this.updateFile();
 
